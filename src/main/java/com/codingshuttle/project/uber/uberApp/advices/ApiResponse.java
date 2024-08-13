@@ -11,7 +11,7 @@ public class ApiResponse<T> {
 	private T data;
 	private ApiError error;
 
-	public ApiResponse(LocalDateTime timeStamp) {
+	public ApiResponse() {
 		this.timeStamp = LocalDateTime.now();
 	}
 
@@ -25,7 +25,4 @@ public class ApiResponse<T> {
 		this.error = error;
 	}
 
-	public ApiResponse() {
-
-	}
 }

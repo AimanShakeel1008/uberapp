@@ -4,10 +4,12 @@ import com.codingshuttle.project.uber.uberApp.entities.RideRequest;
 import com.codingshuttle.project.uber.uberApp.services.DistanceService;
 import com.codingshuttle.project.uber.uberApp.strategies.RideFareCalculationStrategy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Primary
 public class RideFareDefaultFareCalculationStrategy implements RideFareCalculationStrategy {
 
 	private final DistanceService distanceService;

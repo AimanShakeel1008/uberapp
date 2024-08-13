@@ -35,7 +35,6 @@ public class RiderServiceImpl implements RiderService {
 
 	private final RiderRepository riderRepository;
 
-	private final RiderService riderService;
 	@Override
 	public RideRequestDto requestRide(RideRequestDto rideRequestDto) {
 
