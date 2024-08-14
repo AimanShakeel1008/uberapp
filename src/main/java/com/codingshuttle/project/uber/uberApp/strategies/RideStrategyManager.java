@@ -31,7 +31,7 @@ public class RideStrategyManager {
 		// 6PM to 9PM PEAK HOURS
 
 		LocalTime surgeStartTime = LocalTime.of(18,0);
-		LocalTime surgeEndTime = LocalTime.of(21,0);
+		LocalTime surgeEndTime = LocalTime.of(22,0);
 
 		LocalTime currentTime = LocalTime.now();
 

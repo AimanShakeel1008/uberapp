@@ -4,6 +4,7 @@ import com.codingshuttle.project.uber.uberApp.dto.DriverDto;
 import com.codingshuttle.project.uber.uberApp.dto.RideDto;
 import com.codingshuttle.project.uber.uberApp.dto.RideRequestDto;
 import com.codingshuttle.project.uber.uberApp.dto.RiderDto;
+import com.codingshuttle.project.uber.uberApp.entities.Driver;
 import com.codingshuttle.project.uber.uberApp.entities.RideRequest;
 import com.codingshuttle.project.uber.uberApp.entities.Rider;
 import com.codingshuttle.project.uber.uberApp.entities.User;
@@ -12,8 +13,6 @@ import com.codingshuttle.project.uber.uberApp.exceptions.ResourceNotFoundExcepti
 import com.codingshuttle.project.uber.uberApp.repositories.RideRequestRepository;
 import com.codingshuttle.project.uber.uberApp.repositories.RiderRepository;
 import com.codingshuttle.project.uber.uberApp.services.RiderService;
-import com.codingshuttle.project.uber.uberApp.strategies.DriverMatchingStrategy;
-import com.codingshuttle.project.uber.uberApp.strategies.RideFareCalculationStrategy;
 import com.codingshuttle.project.uber.uberApp.strategies.RideStrategyManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,13 +38,16 @@ public class RiderServiceImpl implements RiderService {
 
 		RideRequest rideRequest = modelMapper.map(rideRequestDto, RideRequest.class);
 		rideRequest.setRideRequestStatus(RideRequestStatus.PENDING);
+		rideRequest.setRider(rider);
 
 		Double fare = rideStrategyManager.rideFareCalculationStrategy().calculateFare(rideRequest);
 		rideRequest.setFare(fare);
 
 		RideRequest savedRideRequest = rideRequestRepository.save(rideRequest);
 
-		rideStrategyManager.driverMatchingStrategy(rider.getRating()).findMatchingDrivers(rideRequest);
+		List<Driver> matchingDrivers = rideStrategyManager.driverMatchingStrategy(rider.getRating()).findMatchingDrivers(rideRequest);
+
+		log.info("matchingDrivers:"+matchingDrivers);
 
 		return modelMapper.map(savedRideRequest,RideRequestDto.class);
 	}

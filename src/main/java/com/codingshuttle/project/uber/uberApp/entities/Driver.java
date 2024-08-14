@@ -3,11 +3,13 @@ package com.codingshuttle.project.uber.uberApp.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.locationtech.jts.geom.Point;
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Driver {
 
 	@Id
@@ -19,6 +21,8 @@ public class Driver {
 	private User user;
 
 	private Double rating;
+
+	private String vehicleId;
 
 	private Boolean available;
 
