@@ -5,7 +5,6 @@ import com.codingshuttle.project.uber.uberApp.services.DistanceService;
 import com.codingshuttle.project.uber.uberApp.strategies.RideFareCalculationStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service

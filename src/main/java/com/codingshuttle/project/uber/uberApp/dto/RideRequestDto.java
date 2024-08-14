@@ -5,6 +5,7 @@ import com.codingshuttle.project.uber.uberApp.entities.enums.RideRequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data

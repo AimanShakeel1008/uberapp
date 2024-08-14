@@ -5,7 +5,6 @@ import com.codingshuttle.project.uber.uberApp.entities.RideRequest;
 import com.codingshuttle.project.uber.uberApp.repositories.DriverRepository;
 import com.codingshuttle.project.uber.uberApp.strategies.DriverMatchingStrategy;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

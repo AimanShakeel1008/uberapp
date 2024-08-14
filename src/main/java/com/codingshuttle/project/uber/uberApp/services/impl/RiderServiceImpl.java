@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class RiderServiceImpl implements RiderService {
 	private final RiderRepository riderRepository;
 
 	@Override
+	@Transactional
 	public RideRequestDto requestRide(RideRequestDto rideRequestDto) {
 
 		Rider rider = getCurrentRider();
@@ -45,7 +47,11 @@ public class RiderServiceImpl implements RiderService {
 
 		RideRequest savedRideRequest = rideRequestRepository.save(rideRequest);
 
-		List<Driver> matchingDrivers = rideStrategyManager.driverMatchingStrategy(rider.getRating()).findMatchingDrivers(rideRequest);
+		List<Driver> matchingDrivers = rideStrategyManager
+				.driverMatchingStrategy(rider.getRating())
+				.findMatchingDrivers(rideRequest);
+
+		// TODO: Send notification to all the drivers about this ride request
 
 		log.info("matchingDrivers:"+matchingDrivers);
 
