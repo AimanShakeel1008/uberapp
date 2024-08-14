@@ -62,6 +62,7 @@ public class DriverServiceImpl implements DriverService {
 	}
 
 	@Override
+	@Transactional
 	public RideDto startRide(Long rideId, String otp) {
 		Ride ride = rideService.getRideById(rideId);
 		Driver driver = getCurrentDriver();
