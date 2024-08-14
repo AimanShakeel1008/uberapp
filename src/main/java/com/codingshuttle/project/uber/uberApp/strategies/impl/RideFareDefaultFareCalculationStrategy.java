@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Primary
 public class RideFareDefaultFareCalculationStrategy implements RideFareCalculationStrategy {
 
 	private final DistanceService distanceService;
