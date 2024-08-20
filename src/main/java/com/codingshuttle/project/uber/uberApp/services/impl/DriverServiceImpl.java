@@ -68,7 +68,7 @@ public class DriverServiceImpl implements DriverService {
 		Driver driver = getCurrentDriver();
 
 		if (!driver.equals(ride.getDriver())) {
-			throw new RuntimeException("Driver cannot start the ride as he ahs not accepted it earlier");
+			throw new RuntimeException("Driver cannot start the ride as he has not accepted it earlier");
 		}
 
 		if (!ride.getRideStatus().equals(RideStatus.CONFIRMED)) {
