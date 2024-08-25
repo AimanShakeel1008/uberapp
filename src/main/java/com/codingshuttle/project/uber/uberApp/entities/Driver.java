@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.Point;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class Driver {
 
 	@Id
