@@ -49,8 +49,8 @@ public class DriverController {
 		return ResponseEntity.ok(driverService.getAllMyRides(PageRequest.of(pageOffset, pageSize, Sort.by(Sort.Direction.DESC, "createdTime", "id"))));
 	}
 
-	@PostMapping("rateRider/{riderId}/{rating}")
-	public ResponseEntity<RiderDto> rateRider(@PathVariable Long riderId, @PathVariable Integer rating) {
-		return ResponseEntity.ok(driverService.rateRider(riderId, rating));
+	@PostMapping("rateRider/{rideId}/{rating}")
+	public ResponseEntity<RiderDto> rateRider(@PathVariable Long rideId, @PathVariable Integer rating) {
+		return ResponseEntity.ok(driverService.rateRider(rideId, rating));
 	}
 }
