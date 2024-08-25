@@ -10,8 +10,6 @@ import com.codingshuttle.project.uber.uberApp.strategies.PaymentStrategyManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
