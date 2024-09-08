@@ -9,12 +9,17 @@ import com.codingshuttle.project.uber.uberApp.entities.enums.Role;
 import com.codingshuttle.project.uber.uberApp.exceptions.ResourceNotFoundException;
 import com.codingshuttle.project.uber.uberApp.exceptions.RuntimeConflictException;
 import com.codingshuttle.project.uber.uberApp.repositories.UserRepository;
+import com.codingshuttle.project.uber.uberApp.security.JWTService;
 import com.codingshuttle.project.uber.uberApp.services.AuthService;
 import com.codingshuttle.project.uber.uberApp.services.DriverService;
 import com.codingshuttle.project.uber.uberApp.services.RiderService;
 import com.codingshuttle.project.uber.uberApp.services.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +36,25 @@ public class AuthServiceImpl implements AuthService {
 	private final WalletService walletService;
 
 	private final DriverService driverService;
+
+	private final PasswordEncoder passwordEncoder;
+
+	private final AuthenticationManager authenticationManager;
+
+	private final JWTService jwtService;
 	@Override
-	public String login(String email, String password) {
-		return null;
+	public String[] login(String email, String password) {
+
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(email, password)
+		);
+
+		User user = (User)authentication.getPrincipal();
+
+		String accessToken = jwtService.generateAccessToken(user);
+		String refreshToken = jwtService.generateRefreshToken(user);
+
+		return new String[]{accessToken, refreshToken};
 	}
 
 	@Override
@@ -45,6 +66,8 @@ public class AuthServiceImpl implements AuthService {
 		if (user != null) throw new RuntimeConflictException("Cannot signup, User already exists with email " +signupDto.getEmail());
 
 		User mappedUser = modelMapper.map(signupDto, User.class);
+
+		mappedUser.setPassword(passwordEncoder.encode(mappedUser.getPassword()));
 
 		mappedUser.setRoles(Set.of(Role.RIDER));
 
@@ -70,7 +93,7 @@ public class AuthServiceImpl implements AuthService {
 		Driver createDriver = Driver.builder()
 				.user(user)
 				.rating(0.0)
-				.vehicleId("")
+				.vehicleId(vehicleId)
 				.available(true)
 				.build();
 		user.getRoles().add(Role.DRIVER);
