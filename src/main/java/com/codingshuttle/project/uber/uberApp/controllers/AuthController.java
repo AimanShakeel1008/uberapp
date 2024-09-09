@@ -3,7 +3,6 @@ package com.codingshuttle.project.uber.uberApp.controllers;
 import com.codingshuttle.project.uber.uberApp.dto.*;
 import com.codingshuttle.project.uber.uberApp.services.AuthService;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
