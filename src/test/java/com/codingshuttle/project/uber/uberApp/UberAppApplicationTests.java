@@ -18,7 +18,7 @@ class UberAppApplicationTests {
 
 	@Test
 	void sendEmailMultiple() {
-		String emails[] = {
+		String[] emails = {
 				"dinod88370@coloruz.com",
 				"aimaimankhan@gmail.com"
 		};
