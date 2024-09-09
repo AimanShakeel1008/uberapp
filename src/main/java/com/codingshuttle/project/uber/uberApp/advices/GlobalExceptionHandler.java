@@ -3,6 +3,8 @@ package com.codingshuttle.project.uber.uberApp.advices;
 import com.codingshuttle.project.uber.uberApp.exceptions.BadCredentialsException;
 import com.codingshuttle.project.uber.uberApp.exceptions.ResourceNotFoundException;
 import com.codingshuttle.project.uber.uberApp.exceptions.RuntimeConflictException;
+import io.jsonwebtoken.JwtException;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.channels.AcceptPendingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,36 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ApiResponse<?>> handleResourceNotFound(ResourceNotFoundException exception) {
 		ApiError apiError = ApiError.builder()
 				.status(HttpStatus.NOT_FOUND)
+				.message(exception.getMessage())
+				.build();
+
+		return buildErrorResponseEntity(apiError);
+	}
+
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<ApiResponse<?>> handleAuthenticationException(AuthenticationException exception) {
+		ApiError apiError = ApiError.builder()
+				.status(HttpStatus.UNAUTHORIZED)
+				.message(exception.getMessage())
+				.build();
+
+		return buildErrorResponseEntity(apiError);
+	}
+
+	@ExceptionHandler(JwtException.class)
+	public ResponseEntity<ApiResponse<?>> handleJwtException(JwtException exception) {
+		ApiError apiError = ApiError.builder()
+				.status(HttpStatus.UNAUTHORIZED)
+				.message(exception.getMessage())
+				.build();
+
+		return buildErrorResponseEntity(apiError);
+	}
+
+	@ExceptionHandler(AcceptPendingException.class)
+	public ResponseEntity<ApiResponse<?>> handleAcceptPendingException(AcceptPendingException exception) {
+		ApiError apiError = ApiError.builder()
+				.status(HttpStatus.FORBIDDEN)
 				.message(exception.getMessage())
 				.build();
 
