@@ -10,4 +10,6 @@ public interface AuthService {
 
 	UserDto signup(SignupDto signupDto);
 	DriverDto onBoardNewDriver(Long userId, String vehicleId);
+
+	String refreshToken(String refreshToken);
 }

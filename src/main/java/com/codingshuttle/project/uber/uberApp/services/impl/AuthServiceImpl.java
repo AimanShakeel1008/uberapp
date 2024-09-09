@@ -73,8 +73,6 @@ public class AuthServiceImpl implements AuthService {
 
 		User savedUser = userRepository.save(mappedUser);
 
-//      CREATE USER RELATED ENTITIES
-//      1. RIDER
 		riderService.createNewRider(savedUser);
 
 		walletService.crateNewWallet(savedUser);
@@ -103,5 +101,13 @@ public class AuthServiceImpl implements AuthService {
 		Driver createdDriver = driverService.createNewDriver(createDriver);
 
 		return modelMapper.map(createdDriver, DriverDto.class);
+	}
+
+	@Override
+	public String refreshToken(String refreshToken) {
+		Long userId = jwtService.getUserIdFromToken(refreshToken);
+		User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: "+userId));
+
+		return jwtService.generateAccessToken(user);
 	}
 }
